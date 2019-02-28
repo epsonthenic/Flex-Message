@@ -21,16 +21,20 @@ public class CatalogueFlexMessageSupplier implements Supplier<FlexMessage> {
     @Override
     public FlexMessage get() {
         final Bubble bubble1 = createBubble("Arm Chair, White",
-                "49.99",
+                "49",
                 "https://raw.githubusercontent.com/iphayao/line-bot-spring-boot-flex/master/src/main/resources/img/bubble1.png",
                 false);
         final Bubble bubble2 = createBubble("Metal Desk Lamp",
                 "11.99",
                 "https://raw.githubusercontent.com/iphayao/line-bot-spring-boot-flex/master/src/main/resources/img/bubble2.png",
                 true);
+        final Bubble bubble3 = createBubble("Test",
+                "49.99",
+                "https://raw.githubusercontent.com/iphayao/line-bot-spring-boot-flex/master/src/main/resources/img/bubble1.png",
+                false);
         final Bubble seeMore = createSeeMoreBubble();
         final Carousel carousel = Carousel.builder()
-                .contents(asList(bubble1, bubble2, seeMore))
+                .contents(asList(bubble1, bubble2, bubble3, seeMore))
                 .build();
         return new FlexMessage("Catalogue", carousel);
     }
@@ -80,16 +84,10 @@ public class CatalogueFlexMessageSupplier implements Supplier<FlexMessage> {
         final Box priceBlock = Box.builder()
                 .layout(FlexLayout.BASELINE)
                 .contents(asList(
-                        Text.builder().text("$" + price.split("\\.")[0])
+                        Text.builder().text("$" + price)
                                 .wrap(true)
                                 .weight(Text.TextWeight.BOLD)
                                 .size(FlexFontSize.XL)
-                                .flex(0)
-                                .build(),
-                        Text.builder().text("." + price.split("\\.")[1])
-                                .wrap(true)
-                                .weight(Text.TextWeight.BOLD)
-                                .size(FlexFontSize.SM)
                                 .flex(0)
                                 .build()
                 )).build();
@@ -101,8 +99,7 @@ public class CatalogueFlexMessageSupplier implements Supplier<FlexMessage> {
                 .color("#FF5551")
                 .build();
 
-        FlexComponent[] flexComponents = {titleBlock, priceBlock};
-        List<FlexComponent> listComponent = new ArrayList<>(Arrays.asList(flexComponents));
+        List<FlexComponent> listComponent = new ArrayList<>(Arrays.asList(titleBlock, priceBlock));
         if(isOutOfStock) {
             listComponent.add(outOfStock);
         }
