@@ -51,6 +51,10 @@ public class LineBotController {
                 RichMenuHelper.createRichMenu(lineMessagingClient, pathConfigFlex, pathImageFlex, userId);
                 break;
             }
+            case "Flex Back": {
+                RichMenuHelper.deleteRichMenu(lineMessagingClient, userId);
+                break;
+            }
             case "Flex Restaurant": {
                 this.reply(replyToken, new RestaurantFlexMessageSupplier().get());
                 break;
